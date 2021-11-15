@@ -1,0 +1,6 @@
+## Interface: 20501
+## Title: DuckSwap
+## Author: Gazrilla
+## Version: 1.0.0
+
+swap.lua
