@@ -96,9 +96,7 @@ end
 
 local function checkPermissions(target)
     name, realm = UnitName("player")
-    print("Name: " .. name .. " realm: " .. realm)
     rank, index = getRaidInfo(name)
-    print("Rank: " .. rank .. " index: " .. index)
     if (rank > 0) then
         SendChatMessage("Raid permissions: OK", "WHISPER", nil, target)
     else
@@ -108,9 +106,7 @@ end
 
 local function performSwap(player1Name, player2Name)
     rank1, index1 = getRaidInfo(player1Name)
-    print("Rank1: " .. rank1 .. " index1: " .. index1)
     rank2, index2 = getRaidInfo(player2Name)
-    print("Rank2: " .. rank2 .. " index2: " .. index2)
     if index1 ~= -1 and index2 ~= -1 then
         SwapRaidSubgroup(index1, index2)
     end
@@ -119,13 +115,10 @@ end
 local function handleTrustedWhisper(sender, message)
     message_parts = splitMessage(message)
     if table.getn(message_parts) > 0 and message_parts[1] == "duckswap" then
-        print("Whisper concerns duckswap!")
         -- Whisper concerns duckswap
         if table.getn(message_parts) == 3 and message_parts[2] == "check" and message_parts[3] == "permissions" then
-            print("Check permissions whisper!")
             checkPermissions(sender)
         elseif table.getn(message_parts) == 4 and message_parts[2] == "swap" then
-            print("Perform swap whisper!")
             performSwap(message_parts[3], message_parts[4])
         else
             whisperHelp(sender)
@@ -135,10 +128,7 @@ end
 
 local function handleChatEvent(self, event, message, sender, ...)
     name, occ = gsub(sender, REALM_SUFFIX, "")
-    print("Name: " .. name)
-    print("Message: " .. message)
     if Leaders:contains(name) then
-        print("Leaders contains name!")
         handleTrustedWhisper(sender, message)
     end
 end
